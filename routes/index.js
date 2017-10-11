@@ -21,12 +21,12 @@ router.get('/:args', (req, res, next) => {
   console.log(mypromises)
   axios.all([axios.get(httpAddress + "&steamid=" + array[0] + "&format=json"), axios.get(httpAddress + "&steamid=" + array[1] + "&format=json")])
     .then( (results) => {
-      let temp = results.map(r => r.data)
-      console.log(temp);
-      let count = temp.map(count => count.response.game_count)
-      console.log(count.indexOf(Math.min(count)))
-      res.send(count.indexOf(Math.min(count)))
-
+      let temp = results.map(r => r.data) //add a variable to just get the appids
+      console.log(temp[0].response.games);
+      let count = temp.map(count => count.response.game_count);
+      console.log(count);
+      let keyArr = temp.splice(count.indexOf(Math.min.apply(null, count)), 1)[0].response.games[0]
+      console.log(keyArr)
     })
 
 
